@@ -1,25 +1,47 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     static Scanner input = new Scanner(System.in);
+    static boolean currentChoice = false;
+    static boolean startingChoice = false;
     static ArrayList<Boolean> choices = new ArrayList<>();
-
+    static String[] questions = {
+            "wants to die?",
+            "has taken others lifes",
+            "would suffer more alive then dead",
+            "is going to take my life",
+            "might try to take a group of peoples life",
+            "is hated by a large group of people",
+            "is a old dog",
+            "has unrightfully stolen a large sum off money from many people",
+            "is going to die but his cure cost too much",
+    };
+    static String[] evidence = {
+            "",
+    };
+    static ArrayList<String> questionsleft = new ArrayList<>();
+    static ArrayList<String> evidenceleft = new ArrayList<>();
     public static void main(String[] args) {
-        print("Welcome to tough questions. Todays topic is...");
-        addchoice("Do you think its ever ok to take someones life");
-        if (choices.get(0)) {
-            addchoice("What if its in self defense?");
-            if (!choices.get(1)) {
-                addchoice("So my life ends if someone tries to kill me. I dont get to fight back?");
-                if(!choices.get(2)) {
-                    addchoice("Is ok if I accidentally kill someone while fighting back");
-                }
-            } else {
-                addchoice();
-            }
-        } else {
+        print("???: Meet Billy");
+        for(String question : questions)
+        {
+            questionsleft.add(question);
+        }
+        addchoice("???: Do you think its ok if I take Billy's life");
+        startingChoice=currentChoice;
+        while (questionsleft.size()>0){
+            int index = new Random().nextInt(questionsleft.size());
+            addchoice("What if billy "+questionsleft.get(index)+"? Now is ok to take Billy's life?");
+            questionsleft.remove(index);
 
+            if(currentChoice!=startingChoice) {
+                print("???: Its funny to watch you change your thoughts on billy so quickly just based on the fact I told you that billy "+questionsleft.get(index));
+            }
+            if(evidenceleft.size()>0 && (questionsleft.size()%evidenceleft.size()==0)) {
+                print(evidenceleft.get(0));
+                int index2 = new Random().nextInt(questionsleft.size());
+                questionsleft.remove(index2);
+            }
         }
     }
 
@@ -38,7 +60,9 @@ public class Main {
     }
 
     public static void addchoice(String str) {
-        choices.add(choice(str));
+        currentChoice = choice(str);
+        choices.add(currentChoice);
+
     }
 
     public static void print(String str) {
